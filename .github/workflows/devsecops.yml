@@ -1,0 +1,20 @@
+name: DVWA-DevSecOps-Pipeline
+on:
+  push:
+    branches: [ "main" ] # Triggers the scan every time you push code
+
+jobs:
+  sonarcloud:
+    name: SAST Scan (SonarCloud)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # We will add this secret next
